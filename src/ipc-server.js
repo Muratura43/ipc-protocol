@@ -1,43 +1,51 @@
 const net = require('net');
 
-const hostname = '127.0.0.1';
-const portNumber = 55124;
-var server;
+exports.IpcServer = IpcServer;
 
-module.exports = {
-  start: function (onDataCallback) {
-    server = net.createServer((stream) => {
-      console.log('Client connected.');
-
-      stream.on('data', (data) => {
-        // Send the data back to the caller
-        onDataCallback(data.toString('utf8'));
-      });
-
-      stream.on('end', _ => {
-        console.log('Client disconnected.');
-      });
-    });
-
-    // Start listening for clients
-    server.listen(portNumber, hostname);
-
-    server.on('close', _ => {
-      console.log('Server closing.');
-    });
-
-    server.on('error', (e) => {
-      console.error(e);
-    });
-
-    server.on('listening', function () {
-      console.log('Server is listening.');
-    });
-  },
-  end: function () {
-    if (server !== undefined && server !== null) {
-      server.close();
-      server = null;
-    }
-  }
+exports.createServer = function(port, hostname) {
+  return new IpcServer(port, hostname);
 }
+
+function IpcServer(port, hostname) {
+  this.settings = {
+    hostname: hostname,
+    port: port
+  };
+};
+
+IpcServer.prototype.start = function (onDataCallback) {
+  this.server = net.createServer((stream) => {
+    console.log('Client connected.');
+
+    stream.on('data', (data) => {
+      // Send the data back to the caller
+      onDataCallback(data.toString('utf8'));
+    });
+
+    stream.on('end', _ => {
+      console.log('Client disconnected.');
+    });
+  });
+
+  // Start listening for clients
+  this.server.listen(this.settings.port, this.settings.hostname);
+
+  this.server.on('close', _ => {
+    console.log('Server closing.');
+  });
+
+  this.server.on('error', (e) => {
+    console.error(e);
+  });
+
+  this.server.on('listening', function () {
+    console.log('Server is listening.');
+  });
+};
+
+IpcServer.prototype.end = function () {
+  if (this.server !== undefined && server !== null) {
+    this.server.close();
+    this.server = null;
+  }
+};
