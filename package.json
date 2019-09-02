@@ -4,5 +4,13 @@
   "description": "Provides a simple IPC over TCP",
   "main": "main.js",
   "author": "Muratura43",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": "Muratura43/ipc-protocol",
+  "keywords": [
+    "ipc",
+    "protocol",
+    "tcp",
+    "net",
+    "muratura"
+  ]
 }
