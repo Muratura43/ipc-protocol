@@ -1,2 +1,7 @@
 const protocol = require('./src/ipc-protocol');
-var ipc = protocol.createProtocol(55123, 55124, '127.0.0.1');
+
+module.exports = {
+    getIpc: function (clientPort, serverPort, hostname = '127.0.0.1') {
+        return protocol.createProtocol(clientPort, serverPort, hostname);
+    }
+}
