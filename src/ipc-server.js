@@ -44,7 +44,7 @@ IpcServer.prototype.start = function (onDataCallback) {
 };
 
 IpcServer.prototype.end = function () {
-  if (this.server !== undefined && server !== null) {
+  if (this.server !== undefined && this.server !== null) {
     this.server.close();
     this.server = null;
   }
