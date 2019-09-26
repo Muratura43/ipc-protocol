@@ -1,35 +1,38 @@
-const net = require('net');
+const net = require("net");
 
 exports.IpcClient = IpcClient;
 
 exports.createClient = function(port, hostname) {
   return new IpcClient(port, hostname);
-}
+};
 
 function IpcClient(port, hostname) {
   this.settings = {
     hostname: hostname,
     port: port
   };
-};
+}
 
-IpcClient.prototype.send = function (data, onError) {
-  var client = net.connect({
-    host: this.settings.hostname,
-    port: this.settings.port
-  }, _ => {
-    console.log('Connected to server.');
+IpcClient.prototype.send = function(data, onError) {
+  var client = net.connect(
+    {
+      host: this.settings.hostname,
+      port: this.settings.port
+    },
+    _ => {
+      console.log("Connected to server.");
 
-    // Calculate the buffer size
-    var bufferSize = lpad(data.length, 4);
-    // Send the buffer size to the server
-    client.write(bufferSize, 'utf8', _ => {
-      // Send the actual data to the server
-      client.write(data, 'utf8');
-    });
-  });
+      // Calculate the buffer size
+      var bufferSize = lpad(data.length, 4);
+      // Send the buffer size to the server
+      client.write(bufferSize, "utf8", _ => {
+        // Send the actual data to the server
+        client.write(data, "utf8");
+      });
+    }
+  );
 
-  client.on('error', (e) => {
+  client.on("error", e => {
     console.error(e);
 
     if (onError) {
@@ -37,10 +40,10 @@ IpcClient.prototype.send = function (data, onError) {
     }
   });
 
-  client.on('end', _ => {
-    console.log('Disconnected from server.');
+  client.on("end", _ => {
+    console.log("Disconnected from server.");
   });
-}
+};
 
 function lpad(value, padding) {
   var zeroes = new Array(padding + 1).join("0");
