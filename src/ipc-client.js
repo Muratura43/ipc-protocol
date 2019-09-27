@@ -1,4 +1,5 @@
 const net = require('net');
+const uuidv1 = require('uuid/v1');
 
 exports.IpcClient = IpcClient;
 
@@ -20,12 +21,21 @@ IpcClient.prototype.send = function (data, onError) {
   }, _ => {
     console.log('Connected to server.');
 
+    var request = {
+      Header: {
+        CallbackId: uuidv1(),
+        Port: this.settings.port
+      },
+      Entity: data
+    };
+    var srequest = JSON.stringify(request);
+
     // Calculate the buffer size
-    var bufferSize = lpad(data.length, 4);
+    var bufferSize = lpad(srequest.length, 4);
     // Send the buffer size to the server
     client.write(bufferSize, 'utf8', _ => {
       // Send the actual data to the server
-      client.write(data, 'utf8');
+      client.write(srequest, 'utf8');
     });
   });
 

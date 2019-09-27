@@ -23,7 +23,7 @@ IpcProtocol.prototype.listen = function (onDataCallback) {
 };
 
 IpcProtocol.prototype.send = function (data, onError) {
-  this.client.send(JSON.stringify(data), onError);
+  this.client.send(data, onError);
 };
 
 IpcProtocol.prototype.close = function () {

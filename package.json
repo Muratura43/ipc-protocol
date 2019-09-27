@@ -12,5 +12,8 @@
     "tcp",
     "net",
     "muratura"
-  ]
+  ],
+  "dependencies": {
+    "uuid": "^3.3.3"
+  }
 }

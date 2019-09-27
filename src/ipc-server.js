@@ -2,7 +2,7 @@ const net = require('net');
 
 exports.IpcServer = IpcServer;
 
-exports.createServer = function(port, hostname) {
+exports.createServer = function (port, hostname) {
   return new IpcServer(port, hostname);
 }
 
@@ -18,8 +18,17 @@ IpcServer.prototype.start = function (onDataCallback) {
     console.log('Client connected.');
 
     stream.on('data', (data) => {
-      // Send the data back to the caller
-      onDataCallback(data.toString('utf8'));
+      try {
+        var sdata = data.toString('utf8');
+        var request = JSON.parse(sdata);
+        var headers = request.Header;
+        var entity = request.Entity;
+
+        // Send the data back to the caller
+        onDataCallback(JSON.stringify(entity));
+      } catch (ex) {
+        console.error(ex);
+      }
     });
 
     stream.on('end', _ => {
