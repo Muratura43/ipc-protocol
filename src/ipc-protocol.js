@@ -1,11 +1,11 @@
-const ipcServer = require('./ipc-server');
-const ipcClient = require('./ipc-client');
+const ipcServer = require("./ipc-server");
+const ipcClient = require("./ipc-client");
 
 exports.IpcProtocol = IpcProtocol;
 
 exports.createProtocol = function(clientPort, serverPort, hostname) {
   return new IpcProtocol(clientPort, serverPort, hostname);
-}
+};
 
 function IpcProtocol(clientPort, serverPort, hostname) {
   this.settings = {
@@ -14,11 +14,17 @@ function IpcProtocol(clientPort, serverPort, hostname) {
     serverPort: serverPort
   };
 
-  this.client = ipcClient.createClient(this.settings.clientPort, this.settings.hostname);
-  this.server = ipcServer.createServer(this.settings.serverPort, this.settings.hostname);
-};
+  this.client = ipcClient.createClient(
+    this.settings.clientPort,
+    this.settings.hostname
+  );
+  this.server = ipcServer.createServer(
+    this.settings.serverPort,
+    this.settings.hostname
+  );
+}
 
-IpcProtocol.prototype.listen = function (onDataCallback) {
+IpcProtocol.prototype.listen = function(onDataCallback) {
   this.server.start(onDataCallback);
 };
 
@@ -26,6 +32,6 @@ IpcProtocol.prototype.send = function (data, onError) {
   this.client.send(data, onError);
 };
 
-IpcProtocol.prototype.close = function () {
+IpcProtocol.prototype.close = function() {
   this.server.end();
 };

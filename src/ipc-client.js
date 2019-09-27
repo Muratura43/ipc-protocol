@@ -5,14 +5,14 @@ exports.IpcClient = IpcClient;
 
 exports.createClient = function(port, hostname) {
   return new IpcClient(port, hostname);
-}
+};
 
 function IpcClient(port, hostname) {
   this.settings = {
     hostname: hostname,
     port: port
   };
-};
+}
 
 IpcClient.prototype.send = function (data, onError) {
   var client = net.connect({
@@ -39,7 +39,7 @@ IpcClient.prototype.send = function (data, onError) {
     });
   });
 
-  client.on('error', (e) => {
+  client.on("error", e => {
     console.error(e);
 
     if (onError) {
@@ -47,10 +47,10 @@ IpcClient.prototype.send = function (data, onError) {
     }
   });
 
-  client.on('end', _ => {
-    console.log('Disconnected from server.');
+  client.on("end", _ => {
+    console.log("Disconnected from server.");
   });
-}
+};
 
 function lpad(value, padding) {
   var zeroes = new Array(padding + 1).join("0");
