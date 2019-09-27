@@ -28,8 +28,8 @@ IpcProtocol.prototype.listen = function(onDataCallback) {
   this.server.start(onDataCallback);
 };
 
-IpcProtocol.prototype.send = function (data, onError) {
-  this.client.send(data, onError);
+IpcProtocol.prototype.send = function (data, onError, callbackHeaders) {
+  this.client.send(data, onError, callbackHeaders);
 };
 
 IpcProtocol.prototype.close = function() {

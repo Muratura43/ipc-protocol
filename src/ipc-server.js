@@ -25,7 +25,7 @@ IpcServer.prototype.start = function(onDataCallback) {
         var entity = request.Entity;
 
         // Send the data back to the caller
-        onDataCallback(JSON.stringify(entity));
+        onDataCallback(JSON.stringify(entity), headers);
       } catch (ex) {
         console.error(ex);
       }

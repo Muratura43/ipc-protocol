@@ -3,7 +3,7 @@ const uuidv1 = require('uuid/v1');
 
 exports.IpcClient = IpcClient;
 
-exports.createClient = function(port, hostname) {
+exports.createClient = function (port, hostname) {
   return new IpcClient(port, hostname);
 };
 
@@ -14,18 +14,24 @@ function IpcClient(port, hostname) {
   };
 }
 
-IpcClient.prototype.send = function (data, onError) {
+IpcClient.prototype.send = function (data, onError, headers) {
   var client = net.connect({
     host: this.settings.hostname,
     port: this.settings.port
   }, _ => {
     console.log('Connected to server.');
 
+    var head = {
+      CallbackId: uuidv1(),
+      Port: this.settings.port
+    };
+
+    if (headers) {
+      head = headers;
+    }
+    
     var request = {
-      Header: {
-        CallbackId: uuidv1(),
-        Port: this.settings.port
-      },
+      Header: head,
       Entity: data
     };
     var srequest = JSON.stringify(request);
