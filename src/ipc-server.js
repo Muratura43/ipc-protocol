@@ -13,7 +13,7 @@ function IpcServer(port, hostname) {
   };
 }
 
-IpcServer.prototype.start = function(onDataCallback) {
+IpcServer.prototype.start = function (onDataCallback) {
   this.server = net.createServer(stream => {
     console.log("Client connected.");
 
@@ -47,12 +47,12 @@ IpcServer.prototype.start = function(onDataCallback) {
     console.error(e);
   });
 
-  this.server.on("listening", function() {
+  this.server.on("listening", function () {
     console.log("Server is listening.");
   });
 };
 
-IpcServer.prototype.end = function() {
+IpcServer.prototype.end = function () {
   if (this.server !== undefined && this.server !== null) {
     this.server.close();
     this.server = null;

@@ -14,7 +14,7 @@ function IpcClient(port, hostname) {
   };
 }
 
-IpcClient.prototype.send = function (data, onError, headers) {
+IpcClient.prototype.send = function (data, onError, headers = null) {
   var client = net.connect({
     host: this.settings.hostname,
     port: this.settings.port
@@ -29,7 +29,7 @@ IpcClient.prototype.send = function (data, onError, headers) {
     if (headers) {
       head = headers;
     }
-    
+
     var request = {
       Header: head,
       Entity: data
