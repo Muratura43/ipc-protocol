@@ -35,4 +35,4 @@ main.listen((a, head) => {
 ```
 
 ## Note:
-This solution integrates perfectly with the .NET Core solution [IpcProtocol.Core(https://github.com/Muratura43/IpcProtocol.Core)]
+This solution integrates perfectly with the .NET Core solution [IpcProtocol.Core](https://github.com/Muratura43/IpcProtocol.Core)
