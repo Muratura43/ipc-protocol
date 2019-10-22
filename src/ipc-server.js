@@ -20,12 +20,14 @@ IpcServer.prototype.start = function (onDataCallback) {
     stream.on('data', (data) => {
       try {
         var sdata = data.toString('utf8');
-        var request = JSON.parse(sdata);
+        var request = JSON.parse(sdata.substring(4, sdata.length));
         var headers = request.Header;
         var entity = request.Entity;
 
-        // Send the data back to the caller
-        onDataCallback(JSON.stringify(entity), headers);
+        if (entity) {
+          // Send the data back to the caller
+          onDataCallback(JSON.stringify(entity), headers);
+        }
       } catch (ex) {
         console.error(ex);
       }

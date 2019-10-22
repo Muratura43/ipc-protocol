@@ -38,11 +38,9 @@ IpcClient.prototype.send = function (data, onError, headers = null) {
 
     // Calculate the buffer size
     var bufferSize = lpad(srequest.length, 4);
-    // Send the buffer size to the server
-    client.write(bufferSize, 'utf8', _ => {
-      // Send the actual data to the server
-      client.write(srequest, 'utf8');
-    });
+
+    // Send the message to the server
+    client.write(bufferSize + srequest, 'utf8');
   });
 
   client.on("error", e => {
