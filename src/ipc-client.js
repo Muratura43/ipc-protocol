@@ -3,15 +3,16 @@ const uuidv1 = require('uuid/v1');
 
 exports.IpcClient = IpcClient;
 
-exports.createClient = function (port, hostname) {
+exports.createClient = function (port, hostname, encrypt = null) {
   return new IpcClient(port, hostname);
 };
 
-function IpcClient(port, hostname) {
+function IpcClient(port, hostname, encrypt = null) {
   this.settings = {
     hostname: hostname,
     port: port
   };
+  this.encrypt = encrypt;
 }
 
 IpcClient.prototype.send = function (data, onError, headers = null) {
@@ -35,6 +36,10 @@ IpcClient.prototype.send = function (data, onError, headers = null) {
       Entity: data
     };
     var srequest = JSON.stringify(request);
+    
+    if (this.encrypt) {
+      srequest = this.encrypt(srequest);
+    }
 
     // Calculate the buffer size
     var bufferSize = lpad(srequest.length, 4);

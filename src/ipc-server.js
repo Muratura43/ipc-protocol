@@ -2,15 +2,16 @@ const net = require("net");
 
 exports.IpcServer = IpcServer;
 
-exports.createServer = function (port, hostname) {
+exports.createServer = function (port, hostname, decrypt = null) {
   return new IpcServer(port, hostname);
 };
 
-function IpcServer(port, hostname) {
+function IpcServer(port, hostname, decrypt = null) {
   this.settings = {
     hostname: hostname,
     port: port
   };
+  this.decrypt = decrypt;
 }
 
 IpcServer.prototype.start = function (onDataCallback) {
@@ -20,6 +21,11 @@ IpcServer.prototype.start = function (onDataCallback) {
     stream.on('data', (data) => {
       try {
         var sdata = data.toString('utf8');
+        
+        if (this.decrypt) {
+          sdata = this.decrypt(sdata);
+        }
+
         var request = JSON.parse(sdata.substring(4, sdata.length));
         var headers = request.Header;
         var entity = request.Entity;
