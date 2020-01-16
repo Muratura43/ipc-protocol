@@ -4,7 +4,7 @@ const uuidv1 = require('uuid/v1');
 exports.IpcClient = IpcClient;
 
 exports.createClient = function (port, hostname, encrypt = null) {
-  return new IpcClient(port, hostname);
+  return new IpcClient(port, hostname, encrypt);
 };
 
 function IpcClient(port, hostname, encrypt = null) {

@@ -23,7 +23,7 @@ var protocol = main.getIpc(8022, 8021);
 protocol.listen((a, head) => {
     console.log('Received: ' + a);
 
-    main.send({
+    protocol.send({
         Command: 'node-callback',
         Payload: null
     }, (err) => {

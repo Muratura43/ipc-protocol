@@ -5,13 +5,14 @@ module.exports = {
         var prot = protocol.createProtocol(clientPort, serverPort, hostname);
 
         if (this.encryptMethod) {
-            prot.encrypt = this.encryptMethod;
+            prot.encrypt(this.encryptMethod);
         }
 
         if (this.decryptMethod) {
-            prot.decrypt = this.decryptMethod;
+            prot.decrypt(this.decryptMethod);
         }
 
+        prot.init();
         return prot;
     },
 

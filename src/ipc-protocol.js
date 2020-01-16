@@ -13,17 +13,6 @@ function IpcProtocol(clientPort, serverPort, hostname) {
     clientPort: clientPort,
     serverPort: serverPort
   };
-
-  this.client = ipcClient.createClient(
-    this.settings.clientPort,
-    this.settings.hostname,
-    this.encryptMethod 
-  );
-  this.server = ipcServer.createServer(
-    this.settings.serverPort,
-    this.settings.hostname,
-    this.decryptMethod
-  );
 }
 
 IpcProtocol.prototype.listen = function (onDataCallback) {
@@ -44,4 +33,17 @@ IpcProtocol.prototype.encrypt = function(encryptMethod) {
 
 IpcProtocol.prototype.decrypt = function(decryptMethod) {
   this.decryptMethod = decryptMethod;
+}
+
+IpcProtocol.prototype.init = function() {
+  this.client = ipcClient.createClient(
+    this.settings.clientPort,
+    this.settings.hostname,
+    this.encryptMethod 
+  );
+  this.server = ipcServer.createServer(
+    this.settings.serverPort,
+    this.settings.hostname,
+    this.decryptMethod
+  );
 }
