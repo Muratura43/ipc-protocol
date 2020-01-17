@@ -19,7 +19,7 @@ IpcClient.prototype.send = function (data, onError, headers = null) {
   var client = net.connect({
     host: this.settings.hostname,
     port: this.settings.port
-  }, _ => {
+  }, async _ => {
     console.log('Connected to server.');
 
     var head = {
@@ -38,7 +38,7 @@ IpcClient.prototype.send = function (data, onError, headers = null) {
     var srequest = JSON.stringify(request);
     
     if (this.encrypt) {
-      srequest = this.encrypt(srequest);
+      srequest = await this.encrypt(srequest);
     }
 
     // Calculate the buffer size

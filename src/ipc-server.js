@@ -18,13 +18,13 @@ IpcServer.prototype.start = function (onDataCallback) {
   this.server = net.createServer(stream => {
     console.log("Client connected.");
 
-    stream.on('data', (data) => {
+    stream.on('data', async (data) => {
       try {
         var sdata = data.toString('base64');
         sdata = sdata.substring(4, sdata.length);
         
         if (this.decrypt) {
-          sdata = this.decrypt(sdata);
+          sdata = await this.decrypt(sdata);
         }
 
         var request = JSON.parse(sdata);
