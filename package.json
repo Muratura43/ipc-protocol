@@ -1,6 +1,6 @@
 {
   "name": "ipc-protocol",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Provides a simple IPC over TCP",
   "main": "main.js",
   "author": "Muratura43",

@@ -20,8 +20,15 @@ IpcServer.prototype.start = function (onDataCallback) {
 
     stream.on('data', async (data) => {
       try {
-        var sdata = data.toString('base64');
-        sdata = sdata.substring(4, sdata.length);
+        var sdata = null;
+        
+        if (this.decrypt) {
+          sdata = data.toString('base64');
+          sdata = sdata.substring(4, sdata.length);
+        }
+        else {
+          sdata = data.toString('utf8');
+        }
         
         if (this.decrypt) {
           sdata = await this.decrypt(sdata);
